@@ -79,7 +79,8 @@ const Kiosk = () => {
 
 
     }
-
+   
+    
     // 이미지 클릭시 상세정보 나오게하기
     const handleClickInfo = (p) => {
         console.log(p)
@@ -119,8 +120,12 @@ const Kiosk = () => {
             </div>
 
             <div className="w-1/4 bg-orange-300">
-                <div className="text-4xl font-serif text-amber-700">Cart</div>
-
+                <div className="text-4xl font-serif text-amber-700">Cart
+                <button className="float-right border-2  rounded-sm bg-slate-500 text-white text-xl" onClick={()=>{
+                    setItems([])
+                }}>비우기</button>
+                </div>
+            
                 <ul>
                     {items.map((item, idx) =>
                         <li key={idx} className="">
@@ -141,8 +146,9 @@ const Kiosk = () => {
                 <div className=" text-5xl float-right ">
                     TOTAL {getTotal(items)} 원
                 </div>
+              
             </div>
-
+                        
         </div>
     );
 }
