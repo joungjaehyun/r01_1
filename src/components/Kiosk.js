@@ -9,7 +9,7 @@ const products = [
     { pno: 2, pname: "Vanilla Latte", price: 8000, imgFile: 'vanillaLatte.jpg' },
     { pno: 3, pname: "Iced Capp", price: 4000, imgFile: 'IcedCapp.jpeg' },
     { pno: 4, pname: "Green Tea", price: 2000, imgFile: 'GreenTea.jpg' },
-    { pno: 5, pname: "Black Tea", price: 4000, imgFile: 'blacktea.jpg'}
+    { pno: 5, pname: "Black Tea", price: 4000, imgFile: 'blacktea.jpg' }
 ]
 
 // 총합을 구하는 함수
@@ -34,6 +34,7 @@ const getTotal = (arr) => {
 const Kiosk = () => {
     // 2-1 카트에 담기 위해서 (useState로 re-rendering)
     const [items, setItems] = useState([])
+    const [current, setCurrent] = useState(null)
     // Buy버튼을 누를시 카트에 보내주는 함수 
     const handleClickBuy = (product) => {
         // console 1차적 확인
@@ -79,20 +80,22 @@ const Kiosk = () => {
 
 
     }
-   
-    
+
+
     // 이미지 클릭시 상세정보 나오게하기
-    const handleClickInfo = (p) => {
-        console.log(p)
-        setItems([...items])    
+    const handleClickInfo = (product) => {
+        console.log(product)
+
+        setCurrent({...product})
+
     }
 
 
     return (
         <div className="w-full h-[100vh] flex ">
-            
+
             <div className="w-3/4 bg-red-500">
-                
+
                 <div className="text-4xl font-serif underline text-white">Coffee & Tea Lists</div>
                 <ul className="flex">
 
@@ -101,31 +104,37 @@ const Kiosk = () => {
                         <li key={p.pno} className="text-2xl  m-3 p-3 text-white"
                         >
                             <div>
-                            <img className="w-20 h-15 mr-3 p-2"
-                                onClick={()=> {handleClickInfo(p)}}
-                                src={require(`../images/${p.imgFile}`)}></img>
+                                <img className="w-20 h-15 mr-3 p-2"
+                                    onClick={() => { handleClickInfo(p) }}
+                                    src={require(`../images/${p.imgFile}`)}></img>
 
-                              {p.pname}<br></br> {p.price} 원<br></br>
-                       
+                                {p.pname}<br></br> {p.price} 원<br></br>
 
-                            <button className="border-2 m-2 p-2 rounded-sm bg-amber-900 text-white"
-                                onClick={() => { handleClickBuy(p) }}>BUY</button>
-                            </div>    
+
+                                <button className="border-2 m-2 p-2 rounded-sm bg-amber-900 text-white"
+                                    onClick={() => { handleClickBuy(p) }}>BUY</button>
+                            </div>
                         </li>
 
                     )}
 
                 </ul>
-             
+                <div>
+                    <div>View</div>
+                    {current ? <div>Currnet
+                        <div>{current.pname}</div>
+                    </div>
+                        : <></>}
+                </div>
             </div>
 
             <div className="w-1/4 bg-orange-300">
                 <div className="text-4xl font-serif text-amber-700">Cart
-                <button className="float-right border-2  rounded-sm bg-slate-500 text-white text-xl" onClick={()=>{
-                    setItems([])
-                }}>비우기</button>
+                    <button className="float-right border-2  rounded-sm bg-slate-500 text-white text-xl" onClick={() => {
+                        setItems([])
+                    }}>비우기</button>
                 </div>
-            
+
                 <ul>
                     {items.map((item, idx) =>
                         <li key={idx} className="">
@@ -141,14 +150,14 @@ const Kiosk = () => {
                                     onClick={() => { hadleClickQty(item.pno, -1) }}>-</button>
                             </div>
 
-                        </li>)}   
+                        </li>)}
                 </ul>
                 <div className=" text-5xl float-right ">
                     TOTAL {getTotal(items)} 원
                 </div>
-              
+
             </div>
-                        
+
         </div>
     );
 }
