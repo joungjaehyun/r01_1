@@ -119,12 +119,20 @@ const Kiosk = () => {
                     )}
 
                 </ul>
-                <div>
-                    <div>View</div>
-                    {current ? <div>Currnet
-                        <div>{current.pname}</div>
-                    </div>
+                <hr></hr><br></br>
+                <br></br>
+                <div className="text-4xl text-white font-extrabold">
+                    <div>확인창</div><br></br>
+                    <div>View</div><br></br>
+                    {current ? 
+                        <div >
+                        <div>상품명: &nbsp;{current.pname}</div>
+                        <br></br>
+                        <img className="w-40 h-40" 
+                        src={require(`../images/${current.imgFile}`)}></img>
+                       </div>
                         : <></>}
+                        <br></br>
                 </div>
             </div>
 
